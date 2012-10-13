@@ -1,0 +1,20 @@
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="<%=home_photo_album_photos_path(@current_home,pa)%>"><img src="<%=(pa.judge_cover(pa)).cover%>" width="128" height="128" alt="<%=pa.info%>"/></a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" id="pa_edit<%=pa.id%>"><%=pa.pa_name-%></td>
+  </tr>
+
+  <%if @is_admin%>
+      <tr>
+        <td align="center">
+            <%=link_to '删除', home_photo_album_path(@current_home,pa), confirm: '确定删除?', method: :delete %>
+        </td>
+      </tr>
+  <%end%>
+</table>
+
+

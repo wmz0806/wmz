@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  p_name: MyString
+  info: MyString
+  photo_album_id: 1
+  p_path: MyString
+
+two:
+  p_name: MyString
+  info: MyString
+  photo_album_id: 1
+  p_path: MyString

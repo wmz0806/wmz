@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  info: MyText
+  is_reply: false
+  user_id: 1
+  home_id: 1
+  message_id: 1
+
+two:
+  info: MyText
+  is_reply: false
+  user_id: 1
+  home_id: 1
+  message_id: 1

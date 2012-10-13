@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+  <title><%=@title?@title:'脑残博客_NCBlog'%></title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+</head>
+<body id="body">
+<div class="default">
+  <%=render  partial: "homes/login"-%>
+  <div class="up_scene">
+         <h1 align="center" style="height: 180px;line-height: 180px">
+               <%=@current_home.title%>
+         </h1>
+  </div>
+  <table class="menu_img">
+    <tr>
+      <td>
+        <ul>
+          <li>
+            <%=link_to '首页', home_path(@current_home)%>
+          </li>
+          <li>
+            <%=link_to '博文目录', home_articles_path(@current_home)%>
+          </li>
+          <li>
+            <%=link_to '图片', home_photo_albums_path(@current_home) %>
+          </li>
+          <li>
+            <%=link_to '关于我', home_user_path(@current_home, @current_user) %>
+          </li>
+          <li>
+            <%=link_to '留言板', home_message_boards_path(@current_home) %>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <%if @is_admin %>
+            <script type="text/javascript">
+              function show_du_div(){
+                  $("#du_div").show(500);
+              }
+              function hid_du_div(){
+                  $("#du_div").hide(500);
+              }
+            function edit_dressup(id){
+                $(this).load("/ajax/update_dressup?d_id="+id+"&home_id=<%=@current_home.id%>")
+            }
+            </script>
+            <div style="display: none;position: absolute;" id="du_div" class="module_img">
+              <div align="right" style="background-color: blue;"><a href="javascript:hid_du_div()">X</a></div>
+              <p>主题列表</p>
+                <table>
+                  <tr>
+                  <%for dressups in @dressups%>
+                    <td>
+                      <a href="javascript:edit_dressup('<%=dressups.id%>');"><img src="<%=dressups.img_path%>" width="50" height="50" border="3"/>
+                      <p align="center"><%=dressups.title%></p></a>
+                    </td>
+                  <%end%>
+                  </tr>
+                </table>
+            </div>
+          <a href="javascript:show_du_div();">变更装扮</a>
+        <%end%>
+      </td>
+    </tr>
+  </table>
+  <div>
+    <%= yield %>
+  </div>
+  <div class="down_scene">
+
+  </div>
+</div>
+</body>
+</html>

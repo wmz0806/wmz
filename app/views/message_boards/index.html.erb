@@ -1,0 +1,72 @@
+<%=render  partial: 'homes/style_css'%>
+<div class="bg_img">
+  <p class="module_title">
+    留言板
+  </p>
+  <div>
+    <table>
+      <%for message_board in @message_boards%>
+         <tr>
+           <td>
+             <table>
+               <tr align="center">
+                 <td>
+                   <a href="<%=home_path(message_board.user.home.id)%>"><img src="<%=message_board.user.head_img%>" width="30" height="49" /></a>
+                 </td>
+                 <td rowspan="2">
+                   <%= message_board.info.html_safe%>
+                   <%if @is_admin%>
+                       <p>
+                         <%=link_to '删除', home_message_board_path(@current_home,message_board), confirm: '确定删除?', method: :delete %>
+                       </p>
+                   <%end%>
+                 </td>
+               </tr>
+               <tr align="center">
+                 <td>
+                   <a href="<%=home_path(message_board.user.home.id)%>"><%=message_board.user.real_name%></a>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+      <%end%>
+    </table>
+
+    <p class="module_title">
+      我要留言
+    </p>
+      <%if session[:user]%>
+        <%=form_tag home_message_boards_path(@home_id) do%>
+            <table>
+              <tr>
+                <td>
+                  内容
+                </td>
+               <td>
+                   <%=text_area_tag 'info'%>
+                  <%=hidden_field_tag 'is_master', 'true'%>
+                 <%=submit_tag '确定'%>
+                 <script type="text/javascript">
+                     KindEditor.ready(function(K){
+                         K.create('#info', {
+                             "allowFileManager": false,
+                             "height": 200,"width": 800,
+                             "allowImageUpload": false,
+                             "allowFlashUpload": false,
+                             "allowMediaUpload": false,
+                             uploadJson: '/kindeditor/upload',
+                             fileManagerJson: '/kindeditor/filemanager'
+                         });
+                     });
+
+                 </script>
+               </td>
+              </tr>
+            </table>
+        <%end%>
+      <%else%>
+        <p>请登录后在留言</p>
+      <%end%>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<script type="text/javascript">
+    var num=5;
+    var time;
+    function auto_time(){
+        num--;
+        $("#sp").html(num)
+        time=setTimeout(auto_time,1000);
+        if(num<=0){
+            location.href="/homes"
+            clearTimeout(time);
+        }
+    }
+    auto_time();
+</script>
+<div style="width:300px" class="default">
+  <%=@user.username%>注册成功,<span id="sp">5</span>秒后自动返回！<br/>
+  <%=link_to '或者点击我', homes_path%>
+</div>

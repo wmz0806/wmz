@@ -1,0 +1,115 @@
+<%=render  partial: 'homes/style_css'%>
+
+ <div class="bg_img">
+   <p class="module_title">
+     相册列表
+   </p>
+
+      <%if @is_admin%>
+       <p align="right"><input type='button' value="添加相册" id="new_pa"/></p>
+      <script type="text/javascript">
+          var old_value;
+          var is_click = false;
+          $().ready(function(){
+              var div=$("#new_window");
+              $("#new_pa").click(function(){
+                  div.slideDown(500);
+              });
+              $("#a").click(function(){
+                   div.slideUp(500);
+                  return false;
+              });
+
+
+             $("td[id^=pa_edit]").click(function(){
+                 if(!is_click){
+                     var td_obj=$(this);
+                     old_value=td_obj.html();
+                     var id=td_obj.attr('id').substring(7);
+                     td_obj.html("<input type='text'  id='pa_name' size='10' onblur='ajax_edit__pa_name(event,"+id+");' name='pa_name' value='"+old_value+"'/>");
+                     $("#pa_name").focus();
+                     is_click=true;
+                 }
+              });
+           });
+
+              function ajax_edit__pa_name(event,id){
+                   var input=event.target;
+                   var new_value=input.value;
+                    if(old_value==new_value){
+                       $(input).parent().html(new_value);
+                    }else{
+                        $.post("/ajax/pa_edit",{
+                                home_id: <%=@current_home.id%>,
+                                id: id,
+                                pa_name: new_value},
+                                function(data){
+                                    if(data=='true'){
+                                        $(input).parent().html(new_value);
+                                    }else{
+                                        alert('修改失败');
+                                        $(input).parent().html(old_value);
+                                    }
+                        });
+                     }
+                  is_click=false;
+               }
+
+
+      </script>
+
+          <div class="module_img" style="width:300px;display: none;position: absolute;left:400px;" id="new_window">
+              <div align="right"  class="module_title"><a href="#" id="a">X</a></div>
+            <%=form_for :photo_album do |pa|%>
+              <table>
+                <tr>
+                  <td>
+                    相册名称:
+                  </td>
+                  <td>
+                     <%=pa.text_field 'pa_name'%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    相册简介
+                  </td>
+                  <td>
+                     <%=pa.text_field 'info'%>
+                    <%=pa.hidden_field 'home_id', value: @current_home.id%>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <%=pa.submit '确定'%>
+                  </td>
+                </tr>
+              </table>
+            <%end%>
+          </div>
+    <%end%>
+   <table width="1000" align="center">
+      <%
+         temp=0
+         for pa in @current_pa
+           temp+=1
+           if temp==1
+      %>
+              <tr>
+                <td>
+                      <%=render :partial =>'photo_albums/format_pa', :locals => { :pa => pa}%>
+                </td>
+          <%elsif temp==4
+              temp=0%>
+              <td>
+                <%=render :partial =>'photo_albums/format_pa', :locals => { :pa => pa} %>
+              <td>
+              </tr>
+          <%else%>
+              <td>
+                <%=render :partial =>'photo_albums/format_pa', :locals => { :pa => pa} %>
+              </td>
+           <%end%>
+      <%end%>
+    </table>
+ </div>

@@ -1,0 +1,24 @@
+<div id="comments">
+  <%if session[:user]%>
+      <%=link_to '首页', homes_path%>
+      <span>欢迎用户=<%=link_to session[:user].username, home_path(session[:user]) %>=光临</span>
+      <%=link_to '注销', controller: "ajax", action: "logout" %>
+  <%else%>
+      <table>
+        <tr>
+          <td>
+
+            <%=form_tag "/ajax/login", remote: true, method: 'post' do%>
+                <%=link_to '返回首页', homes_path%>
+                用户名：<%=text_field_tag 'username' %>
+                密&nbsp;&nbsp;&nbsp;&nbsp;码：<%=password_field_tag 'password'%>
+                <%=submit_tag '登录'%>
+            <%end%>
+          </td>
+          <td>
+            没有账号？<%=link_to '点我注册', new_home_path %>
+          </td>
+        </tr>
+      </table>
+  <%end%>
+</div>

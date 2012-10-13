@@ -1,0 +1,145 @@
+<%=render  partial: 'homes/style_css'%>
+
+<div class="bg_img">
+  <%=form_for @article, url: home_article_path(@current_home,@article) do |article|%>
+       <table>
+         <tr>
+           <td>
+             标题：
+           </td>
+           <td id="title"><%=@article.title-%></td>
+         </tr>
+         <tr>
+           <td>
+               内容：
+            </td>
+           <td id="info"><%=@article.info.html_safe-%></td>
+         </tr>
+         <tr>
+           <td colspan="2">
+             <%if @is_admin%>
+                 <script type="text/javascript">
+
+                     function edit_textarea(event){
+                         title = $("#title");
+                         info = $("#info");
+                         var title_str = title.html();
+                         var info_str = info.html();
+                         title.html("");
+                         info.html("");
+                         title.append($("<input name='article[title]' value='"+title_str+"'/>"));
+                         info.append($("<textarea id='article_info' name='article[info]'>"+info_str+"</textarea>"));
+                         KindEditor.create('#article_info', {
+                             "allowFileManager": true,"height": 300,"width": 600,
+                             uploadJson: '/kindeditor/upload',
+                             fileManagerJson: '/kindeditor/filemanager'
+                         });
+                         $("#a").empty();
+                         $("#div").css("display","block");
+                        }
+
+                 </script>
+                 <div id="div" style="display: none;">
+                    <%=article.submit '确定'%>
+                    <a href="javascript: location=location;">取消</a>
+                 </div>
+                 <a href="javascript:edit_textarea();" id="a">编辑</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                 <%=link_to '删除', home_article_path(@current_home,@article), confirm: '确定删除?', method: :delete %>
+             <%end%>
+           </td>
+         </tr>
+       </table>
+    <%end%>
+  <table width="1000" border="1">
+    <tr>
+      <th>
+        评论列表
+      </th>
+    </tr>
+    <% temp_number=0
+       for comment in @comments
+    temp_number+=1%>
+       <tr>
+         <td>
+           <%=form_tag home_article_comment_path(@current_home, @article, comment), method: :put do %>
+                     <table border="1" width="1000">
+                             <tr>
+                             <td align="center" width="10%">
+                             <a href="<%=home_path(comment.user.home.id)%>"><img src="<%=comment.user.head_img%>"  width="30" height="49"/></a>
+                             <br/>
+                               <a href="<%=home_path(comment.user.home.id)%>"><%=comment.user.real_name%></a>
+                             </td>
+                             <td id="comment_info_td<%=comment.id%>"  width="90%"><%=comment.info.html_safe-%></td>
+                             </tr>
+                             <tr>
+                             <td align="right" colspan="2">
+                             <%if session[:user] && session[:user].id==comment.user_id%>
+                             <a id="comment_a<%=comment.id%>" href="javascript:edit_comment('<%=comment.id%>')">编辑</a>
+                             <script type="text/javascript">
+                       function edit_comment(id){
+                           var comment_info_td=$("#comment_info_td"+id);
+                            var html_str = comment_info_td.html();
+                           comment_info_td.html("<textarea id='edit_comment_info"+id+"' name='comment[info]'>"+html_str+"</textarea>");
+                           KindEditor.create('#edit_comment_info'+id, {
+                               "allowFileManager": false,
+                               "height": 200,"width": 800,
+                               "allowImageUpload": false,
+                               "allowFlashUpload": false,
+                               "allowMediaUpload": false,
+                               uploadJson: '/kindeditor/upload',
+                               fileManagerJson: '/kindeditor/filemanager'
+                           });
+                           $("#comment_a"+id).empty();
+                           $("#comment_div"+id).css("display","block");
+                       }
+                     </script>
+                     <div id="comment_div<%=comment.id%>" style="display: none;">
+                       <%=submit_tag '确定'%>
+                       <a href="javascript:location=location;">取消</a>
+                     </div>
+                 <%end%>
+                   <%=link_to '删除', home_article_comment_path(@current_home,@article, comment), confirm: '确定删除该条评论?', method: :delete  if session[:user] && (session[:user].id==comment.user_id || @is_admin)%>
+                </td>
+             </tr>
+           </table>
+           <%end%>
+         </td>
+       </tr>
+    <%end%>
+    <tr>
+      <td>
+        <p align="center"><%='暂无评论' if temp_number==0%></p>
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td>
+        <p align="center">发表评论：</p>
+      </td>
+      <td>
+        <%if session[:user]%>
+        <%=form_for :comment, url: home_article_comments_path(@current_home, @article) do |comment| %>
+          <%=comment.text_area 'info'%>
+            <script type="text/javascript">
+                KindEditor.ready(function(K){
+                    K.create('#comment_info', {
+                        "allowFileManager": false,
+                        "height": 300,"width": 800,
+                        "allowImageUpload": false,
+                        "allowFlashUpload": false,
+                        "allowMediaUpload": false,
+                        uploadJson: '/kindeditor/upload',
+                        fileManagerJson: '/kindeditor/filemanager'
+                    });
+                });
+            </script>
+            <%=comment.submit '确定'%>
+        <%end%>
+      <%else%>
+        <p>请登录后在评论！</p>
+      <%end%>
+      </td>
+    </tr>
+  </table>
+</div>

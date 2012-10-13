@@ -1,0 +1,8 @@
+<script type="text/javascript">
+    <%str=""
+     @comment.errors.full_messages.each do |msg| %>
+    <%str = str+msg%>
+    <%end%>
+    alert("评论失败！<%=str-%>");
+        location.href="<%=home_article_path(@home_id, @article_id)%>"
+</script>

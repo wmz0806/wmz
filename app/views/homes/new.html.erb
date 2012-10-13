@@ -1,0 +1,157 @@
+<link href="/css/templatemo_style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="/css/contentslider.css" />
+<script type="text/javascript" src="/js/contentslider.js"></script>
+<style type="text/css">
+   table tr td{
+       text-align: center
+   }
+</style>
+<script type="text/javascript">
+  $().ready(function (){
+      $("#user_username").blur(function(){
+          chageUsername($(this));
+      });
+      $("#user_password").blur(function(){
+          chagePWD($(this));
+      });
+      $("#repeat_password").blur(function(){
+          chageAPWD($(this));
+      });
+      $("#user_username").blur(function(){
+          chageUsername($(this));
+      });
+      $("#user_email").blur(function(){
+          chageEmail($(this));
+      });
+  });
+
+  //返回
+    function clickBack(){
+        history.go(-1);
+    }
+</script>
+<div id="templatemo_header_panel">
+  <div id="templatemo_header_section">
+    <div id="templatemo_title_section">
+      NC BLOG
+    </div>
+    <div id="templatemo_search_section">
+      <form method="get" action="#">
+        <input type="radio" name="search" value="thissite" />按用户名 <input type="radio" name="search" value="theweb" checked="checked" />按博客名<br />
+        <input type="text" name="q" size="10" id="searchfield" title="searchfield" />
+        <input type="submit" name="Search" value="搜索"  id="searchbutton" onclick="alert('对不起我的功能还没有实现！');" />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="default" align="center">
+
+  <h1>注册用户</h1>
+    <%= form_for(@user) do |f| %>
+        <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "错误") %> 注册失败</h2>
+
+              <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+           <table align="center">
+             <tr>
+               <td>
+                 <%= f.label '用户名' %>
+               </td>
+               <td>
+                 <%= f.text_field :username %><br/>
+                 <span id="s1">&nbsp;</span>
+               </td>
+            </tr>
+             <tr>
+               <td>
+                 <%= f.label '密码' %>
+               </td>
+               <td>
+                 <%= f.password_field :password %><br/>
+                 <span id="s2">&nbsp;</span>
+               </td>
+             </tr>
+             <tr>
+               <td>
+                 <%= f.label '重复密码'%>
+               </td>
+               <td>
+                 <%= password_field_tag :repeat_password %><br />
+                 <span id="s3">&nbsp;</span>
+               </td>
+             </tr>
+             <tr>
+               <td>
+                 <%= f.label '性别' %>
+               </td>
+               <td>
+                 男：<%= f.radio_button :sex, 1, checked: "checked"%>&nbsp;&nbsp;&nbsp;&nbsp;
+                 女：<%= f.radio_button :sex, 0 %>
+               </td>
+             </tr>
+             <tr>
+               <td>
+                 <%= f.label '邮箱' %>
+               </td>
+               <td>
+                 <%= f.text_field :email %><br/>
+                 <span id="s4">&nbsp;</span>
+               </td>
+             </tr>
+             <tr>
+               <td colspan="2">
+                 <%= f.button '注册', type: 'button', onclick: 'submitAll();' %>&nbsp;&nbsp;|&nbsp;&nbsp;
+                 <%= link_to '返回', "#", onclick: "clickBack();" %>
+               </td>
+             </tr>
+           </table>
+      <br/>
+      <br/>
+    <% end %>
+  <div id="templatemo_bottom_panel">
+    <div id="templatemo_bottom_section">
+
+      <div class="templatemo_bottom_section_content">
+        <h3>联盟军团</h3>
+        <p>联盟军团1号</p>
+        <p>联盟军团2号</p>
+        <p>联盟军团3号</p>
+      </div>
+
+      <div class="templatemo_bottom_section_content">
+        <h3>合作伙伴</h3>
+        <ul>
+          <li><a href="#" target="_parent">合作伙伴1号</a></li>
+          <li><a href="#" target="_parent">合作伙伴2号</a></li>
+          <li><a href="#" target="_parent">合作伙伴3号</a></li>
+          <li><a href="#" target="_parent">合作伙伴4号</a></li>
+          <li><a href="#" target="_parent">合作伙伴5号</a></li>
+        </ul>
+      </div>
+
+      <div class="templatemo_bottom_section_content">
+        <h3>广告</h3>
+        <ul>
+          <li><a href="#">广告1</a></li>
+          <li><a href="#">广告2</a></li>
+          <li><a href="#">广告3</a></li>
+          <li><a href="#">广告4</a></li>
+        </ul>
+      </div>
+    </div> <!-- end of templatemo bottom section -->
+  </div> <!-- end of templatemo bottom panel -->
+  <!--  HTML CSS Template Designed by w w w . t e m p l a t e m o . c o m  -->
+  <div id="templatemo_footer_panel">
+    <div id="templatemo_footer_section">
+      Copyright © 2024 <a href="#">版权所有</a> | 博酷在线 <a title="bocoo" href="#" >翻版必究</a>
+    </div>
+</div>
+</div>

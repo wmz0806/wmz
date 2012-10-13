@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  rank: 2
+  visit: 2
+  exp: 2
+  attention: 2
+  is_img: false
+  is_music: false
+  user_id: 2
+  dressup_id: 2
+
+two:
+  title: MyString
+  rank: 2
+  visit: 2
+  exp: 2
+  attention: 2
+  is_img: false
+  is_music: false
+  user_id: 2
+  dressup_id: 2

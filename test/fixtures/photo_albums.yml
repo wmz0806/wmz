@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pa_name: MyString
+  info: MyString
+  cover: MyString
+
+two:
+  pa_name: MyString
+  info: MyString
+  cover: MyString

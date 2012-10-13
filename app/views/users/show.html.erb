@@ -1,0 +1,95 @@
+<%=render  partial: 'homes/style_css'%>
+<div class="bg_img">
+  <p class="module_title">
+    用户资料
+  </p>
+  <%=form_for :user, url: home_user_path(@current_home, @current_user), html: {multipart: true, method: :put} do|user| %>
+   <table border="1">
+     <tr>
+       <td width="200">
+         <p class="module_title">
+           用户头像
+         </p>
+
+         <img src="<%=@current_user.head_img%>" width="200" height="322"/><br/>
+         <div id="head_img_div" style="display: none;position: absolute;" class="module_img">
+
+           <%=file_field_tag 'img'%>
+         </div>
+       </td>
+       <td width="800">
+             <p class="module_title">
+                基本资料
+             </p>
+            <table border="1" width="300" height="150">
+              <tr>
+                <td>
+                     昵称：
+                </td>
+                <td>
+                      <span id="real_name"><%=@current_user.real_name%></span>
+                </td>
+                <td>
+                  性别：
+                </td>
+                <td>
+                  <span id="sex"><%=@current_user.sex==1? '男' : '女'  %></span>
+                </td>
+                <td>
+                  年龄：
+                </td>
+                <td>
+                  <span id="age"><%=@current_user.age%></span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  生日：
+                </td>
+                <td>
+                  <span id="birthday">
+                     <%if @current_user.birthday%>
+                     <span id="birthday_y"><%=@current_user.birthday.year%></span>年
+                      <span id="birthday_m"><%=@current_user.birthday.month%></span>月
+                      <span id="birthday_d"><%=@current_user.birthday.day%></span>日
+                    <%else%>
+                     <span id="birthday_y">-</span>年
+                      <span id="birthday_m">-</span>月
+                      <span id="birthday_d">-</span>日
+                    <%end%>
+                  </span>
+                </td>
+                <td>
+                    地址：
+                </td>
+                <td colspan="3">
+                  <span id="address"><%=@current_user.address%></span>
+                </td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td>
+                  个人简介：
+                </td>
+                <td colspan="5">
+                  <span id="info"><%=@current_user.info%></span>
+                </td>
+              </tr>
+            </table>
+         <%if @is_admin%>
+             <script type="text/javascript" src="/js/edit_user_message.js"></script>
+             <div>
+                    <a href="javascript:init();" id="a">修改</a>
+               <div style="display: none;" id="none_div">
+                    <%=user.submit '应用'%>
+                 <a href="javascript: location=location;">取消</a>
+               </div>
+             </div>
+         <%end%>
+
+       </td>
+     </tr>
+   </table>
+  <%end%>
+</div>

@@ -1,0 +1,283 @@
+<%=render  partial: 'homes/style_css'%>
+<style type="text/css">
+    #slider {
+        width: 200px; /* important to be same as image width */
+        height: 300px; /* important to be same as image height */
+        position: relative; /* important */
+        overflow: hidden; /* important */
+    }
+    #slider img{
+        border: 0px;
+    }
+
+    #sliderContent {
+        width: 200px; /* important to be same as image width or wider */
+        position: absolute;
+        top: 0;
+        margin-left: 0;
+    }
+    .sliderImage {
+        float: left;
+        position: relative;
+        display: none;
+    }
+    .sliderImage span {
+        position: absolute;
+        font: 12px/15px Arial, Helvetica, sans-serif;
+        padding: 5px 5px;
+        margin-left: -90px;
+        width: 200px;
+        background-color: #000;
+        filter: alpha(opacity=70);
+        -moz-opacity: 0.7;
+        -khtml-opacity: 0.7;
+        opacity: 0.7;
+        color: #fff;
+        display: none;
+    }
+    .clear {
+        clear: both;
+    }
+    .sliderImage span strong {
+        font-size: 13px;
+    }
+    .top {
+        top: 0;
+        left: 0;
+    }
+    .bottom {
+        bottom: 0;
+        left: 0;
+    }
+</style>
+<script type="text/javascript" src="/js/s3Slider.js"></script>
+<style type="text/css">
+  .format_div{
+      width: 50px; height: 20px; overflow:hidden;
+  }
+</style>
+<script type="text/javascript">
+  $().ready(function(){
+      $('#slider').s3Slider({
+          timeOut: 5000
+      });
+  });
+</script>
+<div class="bg_img">
+     <table>
+       <tr>
+         <td>
+           <div class="left_div">
+             <!--其他信息-->
+              <div class="module_img" style="width: 200px;">
+                <!--头像-->
+               <p class="module_title">
+                    个人资料
+               </p>
+               <img src="<%=@current_user.head_img%>"  width="200" height="322" />
+                <h4 align="center" style="margin-top: 5px;margin-bottom: 5px;">
+                     <%=@current_user.real_name%>
+                </h4>
+                <ol type="disc">
+                  <li>
+                    等级：<%=@current_home.rank%>
+                  </li>
+                  <li>
+                    积分：<%=@current_home.exp%>
+                  </li>
+                  <li>
+                    访问人数：<%=@current_home.visit%>
+                  </li>
+                  <li>
+                    关注人气：<%=@current_home.attention%>
+                  </li>
+                </ol>
+              </div>
+
+             <div class="module_img">
+               <!--图片播放器-->
+               <p class="module_title">
+                 图片播放器
+               </p>
+
+                   <%if @imgs && @imgs.photos.length>0%>
+                     <div id="slider" style="width: 200px;height: 222px">
+                       <ul id="sliderContent">
+                         <%for img in @imgs.photos%>
+                             <li class="sliderImage">
+                               <a href="javascript:return false;" ><img src="<%=img.p_path%>" style="margin-left: -90px" width="200" height="222" /></a>
+                               <span class="top" ><strong><%=img.p_name%></strong><br /><%=img.info%></span>
+                             </li>
+                         <%end%>
+                        <div class="clear sliderImage"></div>
+                       </ul>
+                     </div>
+                 <%else%>
+                   <div class="m_wh" align="center">
+                     主人暂无设置预览图片
+                   </div>
+                 <%end%>
+
+             </div>
+
+             <div class="module_img">
+               <!--音乐播放器-->
+               <p class="module_title">
+                 音乐播放器
+               </p>
+
+               <div class="m_wh" align="center">
+                     暂无音乐
+               </div>
+             </div>
+
+             <div class="module_img">
+               <!--评论列表-->
+               <p class="module_title">
+                 评论列表
+               </p>
+
+
+               <%if @current_home.comments.length>0%>
+                   <div>
+                     <table border="1">
+                       <%for comment in @comments%>
+                       <tr align="center">
+                         <td>
+                           <a href="<%=home_path(comment.home_id)%>" alt="<%=comment.user.real_name%>"><img src="<%=comment.user.head_img%>" width="30" height="49" /></a>
+                         </td>
+                         <td rowspan="2">
+                           <div style="width: 130px;height: 70px;white-space:normal; overflow:hidden;">
+                             <a href="<%=home_article_path(comment.home_id, comment.article_id)%>"><%=comment.info.html_safe%></a>
+                           </div>
+                         </td>
+                       </tr>
+                           <tr>
+                             <td>
+                               <div class="format_div">
+                               <a href="<%=home_path(comment.home_id)%>" alt="<%=comment.user.real_name%>"><%=comment.user.real_name%></a>
+                               </div>
+                             </td>
+                           </tr>
+                       <%end%>
+                     </table>
+                   </div>
+               <%else%>
+                   <div class="m_wh" align="center">
+                     暂无评论
+                   </div>
+               <%end%>
+             </div>
+
+             <div class="module_img">
+               <!--留言列表-->
+               <p class="module_title">
+                留言
+               </p>
+               <%if @message_boards.length > 0 %>
+                   <%for message_board in @message_boards%>
+                    <table border="1">
+                       <tr align="center">
+                         <td style="width: 30px;">
+                           <a href="<%=home_path(message_board.user.home)%>"><img src="<%=message_board.user.head_img%>" width="30" height="49"/></a>
+                         </td>
+                         <td rowspan="2" style="width: 130px;height: 70px;white-space:normal; overflow:hidden;">
+                           <a href="<%=home_message_boards_path(@current_home)%>"><%=message_board.info.html_safe%></a>
+                         </td>
+                       </tr>
+                       <tr align="center">
+                         <td>
+                           <div class="format_div">
+                             <a href="<%=home_path(message_board.user.home)%>"><%=message_board.user.real_name%></a>
+                           </div>
+
+                         </td>
+                       </tr>
+                     </table>
+                   <%end%>
+               <%else%>
+                 <div class="m_wh" align="center">
+                   暂无留言
+                 </div>
+               <%end%>
+             </div>
+
+             <div class="module_img">
+               <!--访客列表-->
+               <p class="module_title">
+                 访客列表
+               </p>
+               <% if  @home_list.length>0%>
+                   <table width="200">
+                     <%
+                          temp=0
+                        for hl in @home_list
+                          temp+=1%>
+                        <%if temp == 1%>
+                             <tr align="center">
+                               <td class="format_div">
+                                 <a href="<%=home_path(hl)%>"><img src="<%=hl.user.head_img%>" width="30" height="49"/><br/>
+                                  <%=hl.user.real_name%></a>
+                               </td>
+                        <%else temp == 2
+                        temp==0%>
+                             <td class="format_div">
+                               <a href="<%=home_path(hl)%>"><img src="<%=hl.user.head_img%>" width="30" height="49"/><br/>
+                               <%=hl.user.real_name%></a>
+                             </td>
+                            </tr>
+                        <%end%>
+                     <%end%>
+                   </table>
+               <%else%>
+                 <div class="m_wh" align="center">
+                   暂无访客
+                 </div>
+               <%end%>
+             </div>
+           </div>
+
+           <div class="right_div" style="padding-left: 80px;">
+                <!--博文目录-->
+                 <p class="module_title">
+                   最新博文
+                 </p>
+                 <div>
+                   <%for article in @current_articles%>
+                     <div class="article_up">
+                         <table>
+                           <tr>
+                             <td>
+                               <h2  style="color: #000000;">标题：<%=article.title%></h2><span  style="color: #000000;">(<%=article.format_date(article.created_at)%>)</span>
+                            </td>
+                           </tr>
+                         </table>
+                     </div>
+                     <div class="article_down">
+                       <p  style="color: #000000;">
+                         正文：
+                       </p>
+                        <div name="article_div" style="width: 580px;margin: auto;word-wrap:break-word;color: #000000;" >
+                          <%= truncate(strip_tags(article.info), :length => 100)%>
+                        </div>
+                       <p>
+                        <table width="580">
+                          <tr>
+                            <td style="color: #000000;">
+                              阅读:(<%=article.read_number%>)评论(<%=article.comments.count%>)转载(<%=article.reprint_number%>)
+                            </td>
+                            <td style="color: #000000;" align="right">
+                              <%=link_to '<<阅读全文', home_article_path(@current_home,article)%>
+                            </td>
+                          </tr>
+                        </table>
+                       </p>
+                     </div>
+                       <br/>
+                    <%end%>
+                 </div>
+           </div>
+         </td>
+       </tr>
+     </table>
+</div>

@@ -1,0 +1,85 @@
+<%=render  partial: 'homes/style_css'%>
+<style type="text/css">
+      #page_table tr td{
+          border:  0px;
+      }
+</style>
+<script type="text/javascript">
+      $().ready(function(){
+        var ptText=$("#pt").html();
+        if(ptText=="视频博文"){
+            $("#s3").css("fontWeight","bold");
+        }else if(ptText=="图片博文"){
+            $("#s2").css("fontWeight","bold");
+        }else{
+            $("#s1").css("fontWeight","bold");
+        }
+      });
+</script>
+<div class="bg_img">
+  <p class="module_title" id="pt"><%=@module_title-%></p>
+  <table width="1000" id="t">
+    <tr>
+      <td align="right">
+          <span id="s1"><%=link_to '全部', home_articles_path(@current_home) %></span>&nbsp;&nbsp;|&nbsp;&nbsp;<img src="/images/app_img/tu.jpg"/><span id="s2"><%=link_to '含图片', home_articles_path(@current_home, type: 'img')%></span>&nbsp;&nbsp;|&nbsp;&nbsp;<img src="/images/app_img/sp.jpg"/><span id="s3"><%=link_to '含视频', home_articles_path(@current_home, type: 'video')%></span>
+        <%if @is_admin%>
+         &nbsp;&nbsp;|&nbsp;&nbsp;<%=link_to '发布博文', new_home_article_path%>
+       <%end%>
+      </td>
+    </tr>
+    <%for article in @current_articles%>
+        <tr>
+          <td>
+               <div class="left_div">
+                  <b>
+                     <%=link_to article.title, home_article_path(@current_home,article)%>
+                    <%if article.is_img?%>
+                        <img src="/images/app_img/tu.jpg" />
+                    <%end%>
+                    <%if article.is_video?%>
+                     <img src="/images/app_img/sp.jpg" />
+                    <%end%>
+                  </b>
+               </div>
+                <div class="right_div">
+                    (<%=article.comments.count%>/<%=article.read_number%>)&nbsp;<%=article.format_date(article.created_at)%>
+                  <%if @is_admin%>
+                      <%=link_to '删除', home_article_path(@current_home,article), confirm: '确定删除?', method: :delete %>
+                  <%end%>
+                </div>
+          </td>
+        </tr>
+    <%end%>
+    <tr>
+      <td align="right">
+        <p>
+          <table id="page_table">
+            <tr>
+              <td>
+                <%=link_to '上一页', home_articles_path(@current_home, page: @page.to_i-1)  if @page.to_i!=1  %>
+              </td>
+              <td>
+                <%=form_tag home_articles_path(@current_home) , method: 'get' do%>
+                    <% str=""
+                       (1..@always_page).each do |i|
+                         if @page.to_i==i
+                           temp="<option value='#{i}' selected='selected'>#{i}页</option>"
+                         else
+                           temp="<option value='#{i}' >#{i}页</option>"
+                         end
+                         str = str+temp
+                       end%>
+                    <%=select_tag 'page', str.html_safe%>
+                    <%=submit_tag 'GO！'%>
+                <%end%>
+              </td>
+              <td>
+                <%=link_to '下一页', home_articles_path(@current_home, page: @page.to_i+1)  if @page.to_i!=@always_page  %>
+              </td>
+            </tr>
+          </table>
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>

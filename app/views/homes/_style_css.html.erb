@@ -1,0 +1,65 @@
+<style type="text/css">
+    /*body颜色*/
+   body{
+       <%if @current_dressup.background[0]=='#'%>
+         background-color:<%=@current_dressup.background%>;
+       <%else%>
+       background-image: url("<%=@current_dressup.background%>");
+       <%end%>
+   }
+    /*字体颜色*/
+   *{
+       color: <%=@current_dressup.font_color%>;
+   }
+   /*背景图*/
+  .bg_img{
+      background-image: url("<%=@current_dressup.background_img%>");
+  }
+  /*导航背景*/
+ .menu_img{
+     background-image: url("<%=@current_dressup.menu_bg%>");
+     width:1000px;
+     height: 45px;
+ }
+ /*模块背景*/
+ .module_img{
+   background-image: url("<%=@current_dressup.module_bg%>");
+ }
+/*模块标题背景*/
+ .module_title{
+     background-image: url("<%=@current_dressup.module_title_bg%>");
+     margin-top: 0;
+     height: 20px;
+     font-size: 18px;
+ }
+/*文章上部分*/
+ .article_up{
+     background-image: url("<%=@current_dressup.article_bg_up%>");
+     width: 620px;
+     height: 80px;
+ }
+/*文章下部分*/
+ .article_down{
+     background-image: url("<%=@current_dressup.article_bg_down%>");
+     width: 620px;
+     border-top:  1px #000000 solid;
+ }
+ /*上log*/
+ .up_scene{
+     background-image: url("<%=@current_dressup.up_scene%>");
+     width:1000px;
+     height: 214px;
+ }
+ /*下end*/
+ .down_scene{
+     background-image: url("<%=@current_dressup.down_scene%>");
+     width:1000px;
+     height: 200px;
+ }
+  /*a标签样式*/
+   a:link{text-decoration:none;color:<%=@current_dressup.a_before%>;}
+   a:visited{text-decoration:none;color:<%=@current_dressup.a_before%>;}
+   a:hover{text-decoration:underline;color:<%=@current_dressup.a_after%>;}
+
+</style>
+

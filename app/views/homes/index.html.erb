@@ -1,0 +1,162 @@
+<div style="width: 1000px;height:600px">
+
+    <link href="/css/templatemo_style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/css/contentslider.css" />
+    <script type="text/javascript" src="/js/contentslider.js"></script>
+
+  <div id="templatemo_header_panel">
+  <div id="templatemo_header_section">
+    <div id="templatemo_title_section">
+      NC BLOG
+    </div>
+    <div id="templatemo_search_section">
+      <form method="get" action="#">
+        <input type="radio" name="search" value="thissite" />按用户名 <input type="radio" name="search" value="theweb" checked="checked" />按博客名<br />
+        <input type="text" name="q" size="10" id="searchfield" title="searchfield" />
+        <input type="submit" name="Search" value="搜索"  id="searchbutton" onclick="alert('对不起我的功能还没有实现！');" />
+      </form>
+    </div>
+  </div>
+</div>
+
+  <div id="templatemo_menu_panel">
+    <div id="templatemo_menu_section">
+      <ul>
+        <li><a href="<%=homes_path%>"  class="current">首页</a></li>
+        <li><a href="javascript:alert('木有新鲜事！');">新鲜事</a></li>
+        <li><a href="javascript:alert('本网站是本人闲暇时间作品。\n如有BUG请见谅。其他提示请按<帮助>');">关于</a></li>
+        <li><a href="javascript:alert('有事找QQ：353284782');">帮助</a></li>
+      </ul>
+    </div>
+  </div> <!-- end of menu -->
+
+  <div id="templatemo_content_container">
+    <div id="templatemo_content">
+      <div id="templatemo_content_left">
+
+        <div class="templatemo_post">
+          <h1>NC新闻</h1>
+
+          <div id="slider2" class="sliderwrapper">
+            <div class="contentdiv"><img src="images/templatemo_image_2.jpg" alt="image" /></div>
+            <div class="contentdiv"><img src="images/templatemo_image_3.jpg" alt="image" /></div>
+            <div class="contentdiv"><img src="images/templatemo_image_4.jpg" alt="image" /></div>
+          </div>
+
+          <div id="paginate-slider2" class="pagination">
+
+            <a href="#" class="toc">1</a> <a href="#" class="toc anotherclass">2</a> <a href="#" class="toc">3</a>
+          </div>
+          <script type="text/javascript">
+
+              featuredcontentslider.init({
+                  id: "slider2",  //id of main slider DIV
+                  contentsource: ["inline", ""],  //Valid values: ["inline", ""] or ["ajax", "path_to_file"]
+                  toc: "markup",  //Valid values: "#increment", "markup", ["label1", "label2", etc]
+                  nextprev: ["Previous", "Next"],  //labels for "prev" and "next" links. Set to "" to hide.
+                  revealtype: "click", //Behavior of pagination links to reveal the slides: "click" or "mouseover"
+                  enablefade: [true, 0.2],  //[true/false, fadedegree]
+                  autorotate: [true, 3000],  //[true/false, pausetime]
+                  onChange: function(previndex, curindex){  //event handler fired whenever script changes slide
+                      //previndex holds index of last slide viewed b4 current (1=1st slide, 2nd=2nd etc)
+                      //curindex holds index of currently shown slide (1=1st slide, 2nd=2nd etc)
+                  }
+              })
+
+          </script>
+        </div> <!-- end of one post -->
+
+        <div class="templatemo_post">
+          <div class="post_title">
+            热门博文
+            <div class="post_info">
+              测试数据<a href="#" target="_parent">-测试-</a>-测试数据-<a href="#">-测试数据-.</a>
+            </div>
+          </div>
+
+          <div class="post_body">
+            <img src="images/templatemo_image_1.jpg" alt="Free CSS" />
+            <p>我们都是测试数据！</p>
+            <p>我们都是测试数据！</p>
+            <p>我们都是测试数据！</p>
+          </div>
+          <div class="post_comment">
+            <a href="#">查看全文</a>
+          </div>
+        </div> <!-- end of post two -->
+
+
+      </div> <!-- end of content left -->
+
+      <div id="templatemo_content_right">
+
+        <div class="templatemo_right_section">
+          <h2>联系客服</h2>
+            <a target=blank href=tencent://message/?uin=353284782Menu=yes><img border="0" src='http://wpa.qq.com/pa?p=1:17421778:13' alt="这里给我留言"></a>
+          <p>客服帮助(绝不24小时在线)</P>
+        </div>
+
+
+        <div class="templatemo_right_section">
+          <h2>最新注册用户</h2>
+          <ul>
+            <%for user in @new_user%>
+                <li style="clear: left;"><a href="<%=home_path(user.home)%>"><%=user.real_name%></a></li>
+            <%end%>
+          </ul>
+        </div>
+
+        <div class="templatemo_right_section">
+          <h2>热门话题</h2>
+          <ul>
+            <li>XXXXXX <a href="#">XXXXXXXXXXXXXXXXXX</a></li>
+            <li>XXXXXX <a href="#">XXXXXXXXXXXXXXXXXX</a></li>
+            <li>XXXXXX <a href="#">XXXXXXXXXXXXXXXXXXX</a></li>
+            <li>XXXXXX <a href="#">XXXXXXXXXXXX</a></li>
+            <li>XXXXXX <a href="#">XXXXXXXXXXXX</a></li>
+          </ul>
+        </div>
+
+      </div> <!-- end of right content -->
+    </div> <!-- end of content -->
+  </div> <!-- end of content container -->
+
+  <div id="templatemo_bottom_panel">
+    <div id="templatemo_bottom_section">
+
+      <div class="templatemo_bottom_section_content">
+        <h3>联盟军团</h3>
+        <p>联盟军团1号</p>
+        <p>联盟军团2号</p>
+        <p>联盟军团3号</p>
+      </div>
+
+      <div class="templatemo_bottom_section_content">
+        <h3>合作伙伴</h3>
+        <ul>
+          <li><a href="#" target="_parent">合作伙伴1号</a></li>
+          <li><a href="#" target="_parent">合作伙伴2号</a></li>
+          <li><a href="#" target="_parent">合作伙伴3号</a></li>
+          <li><a href="#" target="_parent">合作伙伴4号</a></li>
+          <li><a href="#" target="_parent">合作伙伴5号</a></li>
+        </ul>
+      </div>
+
+      <div class="templatemo_bottom_section_content">
+        <h3>广告</h3>
+        <ul>
+          <li><a href="#">广告1</a></li>
+          <li><a href="#">广告2</a></li>
+          <li><a href="#">广告3</a></li>
+          <li><a href="#">广告4</a></li>
+        </ul>
+      </div>
+    </div> <!-- end of templatemo bottom section -->
+  </div> <!-- end of templatemo bottom panel -->
+  <!--  HTML CSS Template Designed by w w w . t e m p l a t e m o . c o m  -->
+  <div id="templatemo_footer_panel">
+    <div id="templatemo_footer_section">
+      Copyright © 2024 <a href="#">版权所有</a> | 博酷在线 <a title="bocoo" href="#" >翻版必究</a>
+    </div>
+  </div>
+</div>

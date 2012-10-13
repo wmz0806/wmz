@@ -1,0 +1,56 @@
+<%=render  partial: 'homes/style_css'%>
+
+<div class="bg_img">
+  <p class="module_title" id="pt">
+    <%= @module_title ? @module_title : '发布博文'%>
+  </p>
+
+  <table width="1000">
+    <tr>
+      <td>
+         <%=form_for @article, url: home_articles_path do |article|%>
+            <% if @article.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%="#{@article.errors.count}条错误" %> 博文发布失败</h2>
+                    <ol type="square">
+                    <% @article.errors.full_messages.each do |msg| %>
+                        <li class="input_font">
+                          <%if !(msg !~ /Title/) %>
+                             <%=msg.gsub!('Title','标题')%>
+                          <%elsif !(msg !~ /Info/)%>
+                             <%=msg.gsub!('Info','内容')%>
+                          <%end%>
+                        </li>
+                    <% end %>
+                  </ol>
+                </div>
+            <% end %>
+            <table>
+              <tr>
+                <td>
+                  标题：
+                </td>
+                <td>
+                  <%=article.text_field :title%>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  内容：
+                </td>
+                <td>
+                    <%= article.kindeditor :info, :width =>600, :height => 300 %>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" align="center">
+                   <%=article.submit '提交'%>
+                </td>
+              </tr>
+            </table>
+        <%end%>
+
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,25 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+*{
+  font-family:Microsoft YaHei,SimHei;
+}
+
+.default{
+  margin: auto;
+  width:1000px;
+}
+ul{
+  margin-left: 5px;
+}
+ul li{
+  float: left;
+  list-style: none;
+  margin-left: 50px;
+}
+.m_wh{
+  width: 200px;
+  height: 100px;
+  line-height:100px;
+}
